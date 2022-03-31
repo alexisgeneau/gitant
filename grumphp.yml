@@ -1,5 +1,4 @@
 grumphp:
-  hooks_dir: ~
   ascii:
     failed: ~
     succeeded: ~
@@ -13,6 +12,7 @@ grumphp:
         - "dump("
         - "console.log("
       match_word: true
+      triggered_by: ['php', 'js']
     shell:
       scripts:
         - ["-c", "php artisan insight"]
