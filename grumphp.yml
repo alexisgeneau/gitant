@@ -4,6 +4,11 @@ grumphp:
     succeeded: ~
   tasks:
     phpinsights: ~
+    tests: ~
+    phpcsfixer:
+      verbose: true
+      config: .php-cs-fixer.php
+      using_cache: false
     git_blacklist:
       keywords:
         - "var_export("
@@ -23,3 +28,9 @@ services:
       - '@formatter.raw_process'
     tags:
       - {name: grumphp.task, task: phpinsights}
+  Tests\GrumPHP\TestsTask:
+    arguments:
+      - '@process_builder'
+      - '@formatter.raw_process'
+    tags:
+      - { name: grumphp.task, task: tests }
