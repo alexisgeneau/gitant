@@ -3,6 +3,7 @@ grumphp:
     failed: ~
     succeeded: ~
   tasks:
+    phpinsights: ~
     git_blacklist:
       keywords:
         - "die("
@@ -17,4 +18,10 @@ grumphp:
       scripts:
         - ["-c", "php artisan insight"]
 
-
+services:
+  Tests\GrumPHP\PhpInsightsTask:
+    arguments:
+      - '@process_builder'
+      - '@formatter.raw_process'
+    tags:
+      - {name: grumphp.task, task: phpinsights}

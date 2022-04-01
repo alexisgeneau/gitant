@@ -15,6 +15,12 @@ use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
+use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\UselessConstantTypeHintSniff;
+use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
 
 return [
 
@@ -85,12 +91,23 @@ return [
         PropertyTypeHintSniff::class,
         ReturnTypeHintSniff::class,
         UselessFunctionDocCommentSniff::class,
+        DisallowEmptySniff::class,
+        DisallowShortTernaryOperatorSniff::class,
+        UselessConstantTypeHintSniff::class,
+        NoEmptyCommentFixer::class,
     ],
 
     'config' => [
         ForbiddenPrivateMethods::class => [
             'title' => 'The usage of private methods is not idiomatic in Laravel.',
         ],
+        CyclomaticComplexityIsHigh::class => [
+            'maxComplexity' => 7,
+        ],
+        LineLengthSniff::class => [
+            'lineLimit' => 1000,
+            'absoluteLineLimit' => 1000,
+        ]
     ],
 
     /*
@@ -105,11 +122,11 @@ return [
     */
 
     'requirements' => [
-//        'min-quality' => 0,
-//        'min-complexity' => 0,
-//        'min-architecture' => 0,
-//        'min-style' => 0,
-//        'disable-security-check' => false,
+        'min-quality' => 90,
+        'min-complexity' => 85,
+        'min-architecture' => 90,
+        'min-style' => 90,
+        'disable-security-check' => false,
     ],
 
     /*
