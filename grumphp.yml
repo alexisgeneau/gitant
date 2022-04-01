@@ -6,6 +6,7 @@ grumphp:
     phpinsights: ~
     git_blacklist:
       keywords:
+        - "var_export("
         - "die("
         - "var_dump("
         - "exit;"
@@ -13,10 +14,7 @@ grumphp:
         - "dump("
         - "console.log("
       match_word: true
-      triggered_by: ['php', 'js']
-    shell:
-      scripts:
-        - ["-c", "php artisan insight"]
+      triggered_by: [php, js]
 
 services:
   Tests\GrumPHP\PhpInsightsTask:
