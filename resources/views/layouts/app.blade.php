@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         <script>
-            if(localStorage.getItem('dark') === 'true')
+            if(localStorage.getItem('dark') === 'true' || (!('dark' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches))
                 document.getElementsByTagName('html')[0].classList += ' dark'
         </script>
 
