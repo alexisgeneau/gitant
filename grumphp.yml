@@ -20,6 +20,8 @@ grumphp:
         - "console.log("
       match_word: true
       triggered_by: [php, js]
+      whitelist_patterns:
+        - /^(?!public).*/
 
 services:
   Tests\GrumPHP\PhpInsightsTask:

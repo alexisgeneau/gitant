@@ -21,6 +21,7 @@ use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\UselessConstantTypeHintSniff;
 use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
+use SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff;
 
 return [
 
@@ -95,6 +96,7 @@ return [
         DisallowShortTernaryOperatorSniff::class,
         UselessConstantTypeHintSniff::class,
         NoEmptyCommentFixer::class,
+        ForbiddenPublicPropertySniff::class,
     ],
 
     'config' => [
