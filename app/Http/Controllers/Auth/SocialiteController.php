@@ -17,6 +17,13 @@ class SocialiteController extends Controller
     {
         $this->validateProvider($provider);
 
+        if (empty(config("services.{$provider}.client_id"))) {
+            return redirect()->route('login')->with(
+                'error',
+                "OAuth {$provider} is not configured. Add " . strtoupper($provider) . '_CLIENT_ID to your .env file.'
+            );
+        }
+
         return Socialite::driver($provider)->redirect();
     }
 

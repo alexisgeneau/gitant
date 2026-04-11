@@ -68,7 +68,8 @@
     "login_with_gitlab": "Log in with GitLab",
     "welcome_back": "Welcome back",
     "oauth_only_hint": "Use your GitHub or GitLab account to sign in.",
-    "terms_notice": "By signing in you agree to our Terms of Service and Privacy Policy."
+    "terms_notice": "By signing in you agree to our Terms of Service and Privacy Policy.",
+    "oauth_not_configured": "{{provider}} OAuth is not configured. Set {{env}} in your .env file."
   },
   "profile": {
     "hunter_stats": "Hunter stats",

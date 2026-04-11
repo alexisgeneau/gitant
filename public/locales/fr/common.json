@@ -68,7 +68,8 @@
     "login_with_gitlab": "Se connecter avec GitLab",
     "welcome_back": "Bon retour",
     "oauth_only_hint": "Utilisez votre compte GitHub ou GitLab pour vous connecter.",
-    "terms_notice": "En vous connectant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité."
+    "terms_notice": "En vous connectant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité.",
+    "oauth_not_configured": "{{provider}} OAuth n'est pas configuré. Ajoutez {{env}} dans votre fichier .env."
   },
   "profile": {
     "hunter_stats": "Stats chasseur",

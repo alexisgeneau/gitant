@@ -52,6 +52,10 @@ class HandleInertiaRequests extends Middleware
                 'success' => $request->session()->get('success'),
                 'error'   => $request->session()->get('error'),
             ],
+            'oauth' => [
+                'github' => ! empty(config('services.github.client_id')),
+                'gitlab' => ! empty(config('services.gitlab.client_id')),
+            ],
         ];
     }
 }

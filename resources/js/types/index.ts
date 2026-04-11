@@ -16,6 +16,10 @@ export interface SharedProps {
         success: string | null;
         error: string | null;
     };
+    oauth: {
+        github: boolean;
+        gitlab: boolean;
+    };
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = SharedProps & T;
