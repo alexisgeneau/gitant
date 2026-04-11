@@ -24,6 +24,8 @@ class User extends Authenticatable
         'stripe_connect_status',
         'preferred_locale',
         'is_admin',
+        'reputation_score',
+        'cooldown_until',
     ];
 
     protected $hidden = [
@@ -33,8 +35,9 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'is_admin' => 'boolean',
-            'deleted_at' => 'datetime',
+            'is_admin'       => 'boolean',
+            'deleted_at'     => 'datetime',
+            'cooldown_until' => 'datetime',
         ];
     }
 
@@ -69,5 +72,16 @@ class User extends Authenticatable
     public function getAvatarUrl(): ?string
     {
         return $this->avatar_url;
+    }
+
+    public function isUnderCooldown(): bool
+    {
+        return $this->cooldown_until && $this->cooldown_until->isFuture();
+    }
+
+    public function adjustReputation(int $delta): void
+    {
+        $newScore = max(0, ($this->reputation_score ?? 100) + $delta);
+        $this->update(['reputation_score' => $newScore]);
     }
 }

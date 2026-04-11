@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDisputeController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\BountyController;
+use App\Http\Controllers\DisputeController;
 use App\Http\Controllers\GitHubWebhookController;
 use App\Http\Controllers\GitLabWebhookController;
 use App\Http\Controllers\Profile\ProfileController;
@@ -63,6 +65,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/bounties/{bounty}/release', [BountyController::class, 'release'])->name('bounties.release');
     Route::post('/bounties/{bounty}/approve', [BountyController::class, 'approve'])->name('bounties.approve');
     Route::post('/bounties/{bounty}/reject', [BountyController::class, 'reject'])->name('bounties.reject');
+
+    // Dispute routes
+    Route::get('/bounties/{bounty}/dispute', [DisputeController::class, 'create'])->name('disputes.create');
+    Route::post('/bounties/{bounty}/dispute', [DisputeController::class, 'store'])->name('disputes.store');
+    Route::get('/disputes/{dispute}', [DisputeController::class, 'show'])->name('disputes.show');
+    Route::post('/disputes/{dispute}/respond', [DisputeController::class, 'respond'])->name('disputes.respond');
+});
+
+// Admin routes
+Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/disputes', [AdminDisputeController::class, 'index'])->name('admin.disputes.index');
+    Route::post('/disputes/{dispute}/resolve', [AdminDisputeController::class, 'resolve'])->name('admin.disputes.resolve');
 });
 
 // -------------------------------------------------------------------------

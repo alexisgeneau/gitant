@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Bounty extends Model
 {
@@ -67,6 +68,16 @@ class Bounty extends Model
     public function paidContributions(): HasMany
     {
         return $this->hasMany(BountyContribution::class)->where('status', 'paid');
+    }
+
+    public function activeDispute(): HasOne
+    {
+        return $this->hasOne(Dispute::class)->whereIn('status', ['open', 'awaiting_response', 'mediation', 'arbitration']);
+    }
+
+    public function disputes(): HasMany
+    {
+        return $this->hasMany(Dispute::class);
     }
 
     // -------------------------------------------------------------------------
