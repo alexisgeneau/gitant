@@ -47,4 +47,10 @@ return [
         'redirect' => env('GITLAB_REDIRECT_URI', '/auth/gitlab/callback'),
     ],
 
+    'stripe' => [
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+    ],
+
 ];

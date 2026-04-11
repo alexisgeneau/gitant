@@ -9,6 +9,7 @@ import type { Bounty } from '@/types/bounty';
 
 interface Props extends PageProps {
     bounty: Bounty;
+    paymentStatus?: string | null;
 }
 
 const STATUS_COLORS: Record<string, string> = {
@@ -20,7 +21,7 @@ const STATUS_COLORS: Record<string, string> = {
     expired: 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-500',
 };
 
-export default function BountyShow({ auth, bounty }: Props) {
+export default function BountyShow({ auth, bounty, paymentStatus }: Props) {
     const { t } = useTranslation();
     const Layout = auth.user ? AppLayout : GuestLayout;
 
@@ -37,6 +38,18 @@ export default function BountyShow({ auth, bounty }: Props) {
             <Head title={bounty.issue_title} />
 
             <div className="max-w-3xl mx-auto">
+                {/* Payment status banners */}
+                {paymentStatus === 'success' && (
+                    <div className="mb-4 p-4 rounded-lg bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 text-sm font-medium">
+                        Payment successful! Your bounty contribution is being confirmed. The total will update shortly.
+                    </div>
+                )}
+                {paymentStatus === 'cancelled' && (
+                    <div className="mb-4 p-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-300 text-sm">
+                        Payment was cancelled. You can try again by clicking "Add funds".
+                    </div>
+                )}
+
                 {/* Breadcrumb */}
                 <nav className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                     <Link href="/bounties" className="hover:text-indigo-600 dark:hover:text-indigo-400">

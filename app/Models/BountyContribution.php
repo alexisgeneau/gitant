@@ -16,6 +16,7 @@ class BountyContribution extends Model
         'user_id',
         'amount_cents',
         'commission_cents',
+        'stripe_checkout_session_id',
         'stripe_payment_intent_id',
         'stripe_charge_id',
         'status',

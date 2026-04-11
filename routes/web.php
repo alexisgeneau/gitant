@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\BountyController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Profile\SettingsController;
+use App\Http\Controllers\StripeConnectController;
+use App\Http\Controllers\StripeWebhookController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -73,5 +75,20 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('settings');
         Route::patch('/', [SettingsController::class, 'update'])->name('settings.update');
         Route::delete('/', [SettingsController::class, 'destroy'])->name('settings.destroy');
+
+        // Stripe Connect (hunter payment onboarding)
+        Route::prefix('payments')->group(function () {
+            Route::get('/', [StripeConnectController::class, 'index'])->name('settings.payments');
+            Route::post('/connect', [StripeConnectController::class, 'connect'])->name('settings.payments.connect');
+            Route::get('/return', [StripeConnectController::class, 'return'])->name('settings.payments.return');
+        });
     });
 });
+
+// -------------------------------------------------------------------------
+// Stripe webhooks (no CSRF, raw body needed for signature verification)
+// -------------------------------------------------------------------------
+
+Route::post('/webhooks/stripe', [StripeWebhookController::class, 'handle'])
+    ->name('webhooks.stripe')
+    ->middleware('throttle:100,1');

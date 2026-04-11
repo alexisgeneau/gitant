@@ -86,7 +86,19 @@
     "danger_zone": "Zone de danger",
     "delete_account": "Supprimer mon compte",
     "delete_account_description": "La suppression de votre compte effacera définitivement toutes vos données.",
-    "delete_confirm": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible."
+    "delete_confirm": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.",
+    "payments": {
+      "title": "Paramètres de paiement",
+      "bank_account": "Compte bancaire",
+      "bank_account_description": "Connectez un compte bancaire pour recevoir vos paiements de bounties.",
+      "kyc_description": "Vous devez compléter la vérification d'identité pour recevoir des virements. Cette étape est gérée de manière sécurisée par Stripe.",
+      "active_description": "Votre compte est actif et vous pouvez recevoir des paiements.",
+      "connect_account": "Connecter un compte bancaire",
+      "continue_onboarding": "Continuer l'intégration",
+      "manage": "Gérer le compte",
+      "info_title": "Comment fonctionnent les paiements",
+      "info_description": "Lorsqu'une bounty que vous avez réclamée est validée, le montant total est viré sur votre compte bancaire sous 2 à 7 jours ouvrés."
+    }
   },
   "dashboard": {
     "welcome": "Bienvenue, @{{username}}",

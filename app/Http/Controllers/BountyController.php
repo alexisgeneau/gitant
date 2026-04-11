@@ -111,7 +111,7 @@ class BountyController extends Controller
     public function store(CreateBountyRequest $request, CreateBountyAction $action): \Illuminate\Http\RedirectResponse
     {
         try {
-            $bounty = $action->handle(
+            ['bounty' => $bounty, 'checkoutUrl' => $checkoutUrl] = $action->handle(
                 funder: $request->user(),
                 issueUrl: $request->input('issue_url'),
                 amountCents: $request->integer('amount_cents'),
@@ -123,21 +123,20 @@ class BountyController extends Controller
             return back()->withErrors(['issue_url' => $e->getMessage()]);
         }
 
-        return redirect()
-            ->route('bounties.show', $bounty)
-            ->with('success', 'Bounty posted successfully!');
+        return redirect()->away($checkoutUrl);
     }
 
     // -------------------------------------------------------------------------
     // Show (public)
     // -------------------------------------------------------------------------
 
-    public function show(Bounty $bounty): Response
+    public function show(Request $request, Bounty $bounty): Response
     {
         $bounty->load(['claimer', 'paidContributions.funder']);
 
         return Inertia::render('Bounty/Show', [
-            'bounty' => $bounty,
+            'bounty'        => $bounty,
+            'paymentStatus' => $request->query('payment'),
         ]);
     }
 

@@ -86,7 +86,19 @@
     "danger_zone": "Danger zone",
     "delete_account": "Delete my account",
     "delete_account_description": "Once you delete your account, all of your data will be permanently removed.",
-    "delete_confirm": "Are you sure you want to delete your account? This action cannot be undone."
+    "delete_confirm": "Are you sure you want to delete your account? This action cannot be undone.",
+    "payments": {
+      "title": "Payment Settings",
+      "bank_account": "Bank Account",
+      "bank_account_description": "Connect a bank account to receive bounty payouts.",
+      "kyc_description": "You need to complete identity verification to receive payouts. This is handled securely by Stripe.",
+      "active_description": "Your account is active and you can receive payouts.",
+      "connect_account": "Connect bank account",
+      "continue_onboarding": "Continue onboarding",
+      "manage": "Manage account",
+      "info_title": "How payouts work",
+      "info_description": "When a bounty you claimed is validated, the full bounty amount is transferred to your connected bank account within 2–7 business days."
+    }
   },
   "dashboard": {
     "welcome": "Welcome, @{{username}}",
