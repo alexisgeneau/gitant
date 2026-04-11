@@ -1,0 +1,30 @@
+{
+  "app_name": "Gitant",
+  "nav": {
+    "home": "Home",
+    "bounties": "Bounties",
+    "login": "Log in",
+    "signup": "Sign up",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "bounty": {
+    "create": "Post a Bounty",
+    "amount": "Amount",
+    "status": {
+      "open": "Open",
+      "claimed": "Claimed",
+      "in_review": "In Review",
+      "completed": "Completed",
+      "disputed": "Disputed",
+      "expired": "Expired"
+    },
+    "claim": "Claim Bounty",
+    "submit_pr": "Submit PR"
+  },
+  "auth": {
+    "login_with_github": "Log in with GitHub",
+    "login_with_gitlab": "Log in with GitLab"
+  }
+}

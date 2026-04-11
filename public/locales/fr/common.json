@@ -1,0 +1,30 @@
+{
+  "app_name": "Gitant",
+  "nav": {
+    "home": "Accueil",
+    "bounties": "Bounties",
+    "login": "Connexion",
+    "signup": "Inscription",
+    "dashboard": "Tableau de bord",
+    "profile": "Profil",
+    "logout": "Déconnexion"
+  },
+  "bounty": {
+    "create": "Poster une Bounty",
+    "amount": "Montant",
+    "status": {
+      "open": "Ouvert",
+      "claimed": "Réclamé",
+      "in_review": "En révision",
+      "completed": "Terminé",
+      "disputed": "Disputé",
+      "expired": "Expiré"
+    },
+    "claim": "Réclamer la Bounty",
+    "submit_pr": "Soumettre une PR"
+  },
+  "auth": {
+    "login_with_github": "Se connecter avec GitHub",
+    "login_with_gitlab": "Se connecter avec GitLab"
+  }
+}
