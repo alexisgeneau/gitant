@@ -7,6 +7,7 @@
     "signup": "Inscription",
     "dashboard": "Tableau de bord",
     "profile": "Profil",
+    "settings": "Paramètres",
     "logout": "Déconnexion"
   },
   "bounty": {
@@ -24,7 +25,38 @@
     "submit_pr": "Soumettre une PR"
   },
   "auth": {
+    "login_title": "Connexion",
     "login_with_github": "Se connecter avec GitHub",
-    "login_with_gitlab": "Se connecter avec GitLab"
+    "login_with_gitlab": "Se connecter avec GitLab",
+    "welcome_back": "Bon retour",
+    "oauth_only_hint": "Utilisez votre compte GitHub ou GitLab pour vous connecter.",
+    "terms_notice": "En vous connectant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité."
+  },
+  "profile": {
+    "hunter_stats": "Stats chasseur",
+    "funder_stats": "Stats financeur",
+    "bounties_completed": "Complétées",
+    "success_rate": "Taux de succès",
+    "total_earned": "Total gagné",
+    "bounties_posted": "Bounties postées",
+    "validation_rate": "Taux de validation",
+    "total_invested": "Total investi"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "profile": "Profil",
+    "preferences": "Préférences",
+    "language": "Langue",
+    "save": "Enregistrer",
+    "connected_github": "GitHub connecté",
+    "connected_gitlab": "GitLab connecté",
+    "danger_zone": "Zone de danger",
+    "delete_account": "Supprimer mon compte",
+    "delete_account_description": "La suppression de votre compte effacera définitivement toutes vos données.",
+    "delete_confirm": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible."
+  },
+  "dashboard": {
+    "welcome": "Bienvenue, @{{username}}",
+    "subtitle": "Voici un aperçu de votre activité."
   }
 }

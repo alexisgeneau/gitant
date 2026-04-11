@@ -7,6 +7,7 @@
     "signup": "Sign up",
     "dashboard": "Dashboard",
     "profile": "Profile",
+    "settings": "Settings",
     "logout": "Logout"
   },
   "bounty": {
@@ -24,7 +25,38 @@
     "submit_pr": "Submit PR"
   },
   "auth": {
+    "login_title": "Log in",
     "login_with_github": "Log in with GitHub",
-    "login_with_gitlab": "Log in with GitLab"
+    "login_with_gitlab": "Log in with GitLab",
+    "welcome_back": "Welcome back",
+    "oauth_only_hint": "Use your GitHub or GitLab account to sign in.",
+    "terms_notice": "By signing in you agree to our Terms of Service and Privacy Policy."
+  },
+  "profile": {
+    "hunter_stats": "Hunter stats",
+    "funder_stats": "Funder stats",
+    "bounties_completed": "Completed",
+    "success_rate": "Success rate",
+    "total_earned": "Total earned",
+    "bounties_posted": "Bounties posted",
+    "validation_rate": "Validation rate",
+    "total_invested": "Total invested"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "preferences": "Preferences",
+    "language": "Language",
+    "save": "Save changes",
+    "connected_github": "GitHub connected",
+    "connected_gitlab": "GitLab connected",
+    "danger_zone": "Danger zone",
+    "delete_account": "Delete my account",
+    "delete_account_description": "Once you delete your account, all of your data will be permanently removed.",
+    "delete_confirm": "Are you sure you want to delete your account? This action cannot be undone."
+  },
+  "dashboard": {
+    "welcome": "Welcome, @{{username}}",
+    "subtitle": "Here is your activity overview."
   }
 }

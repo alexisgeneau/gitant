@@ -6,16 +6,17 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { initI18n } from './i18n';
 
-const appName = (window as unknown as { document: { title: string } }).document.getElementsByTagName('title')[0]?.innerText || 'Gitant';
+const appName = document.title || 'Gitant';
 
 initI18n().then(() => {
     createInertiaApp({
         title: (title) => `${title} - ${appName}`,
-        resolve: (name) =>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        resolve: (name: string) =>
             resolvePageComponent(
                 `./Pages/${name}.tsx`,
                 import.meta.glob('./Pages/**/*.tsx'),
-            ),
+            ) as any,
         setup({ el, App, props }) {
             const root = createRoot(el);
             root.render(<App {...props} />);
