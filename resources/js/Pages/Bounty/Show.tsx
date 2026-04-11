@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import AppLayout from '@/Layouts/AppLayout';
 import GuestLayout from '@/Layouts/GuestLayout';
@@ -21,9 +21,37 @@ const STATUS_COLORS: Record<string, string> = {
     expired: 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-500',
 };
 
-export default function BountyShow({ auth, bounty, paymentStatus }: Props) {
+export default function BountyShow({ auth, bounty, paymentStatus, flash }: Props) {
     const { t } = useTranslation();
     const Layout = auth.user ? AppLayout : GuestLayout;
+
+    const isClaimer = auth.user && bounty.claimer?.id === auth.user.id;
+    const isFunder = auth.user && bounty.paid_contributions?.some(c => c.funder.id === auth.user!.id);
+
+    function handleClaim() {
+        router.post(`/bounties/${bounty.id}/claim`);
+    }
+
+    function handleRelease() {
+        if (confirm('Are you sure you want to release this claim?')) {
+            router.post(`/bounties/${bounty.id}/release`);
+        }
+    }
+
+    function handleApprove() {
+        if (confirm('Approve the hunter\'s work and trigger payout?')) {
+            router.post(`/bounties/${bounty.id}/approve`);
+        }
+    }
+
+    function handleReject(dispute = false) {
+        const msg = dispute
+            ? 'Open a dispute? An admin will arbitrate.'
+            : 'Reject the PR? The hunter can revise and resubmit.';
+        if (confirm(msg)) {
+            router.post(`/bounties/${bounty.id}/reject`, { dispute: dispute ? 1 : 0 });
+        }
+    }
 
     const amountDollars = (bounty.total_amount_cents / 100).toLocaleString('en-US', {
         style: 'currency',
@@ -167,18 +195,21 @@ export default function BountyShow({ auth, bounty, paymentStatus }: Props) {
                     </div>
                 )}
 
+                {/* Flash messages */}
+                {flash?.success && (
+                    <div className="mb-4 p-3 rounded-lg bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-sm">
+                        {flash.success}
+                    </div>
+                )}
+                {flash?.error && (
+                    <div className="mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 text-sm">
+                        {flash.error}
+                    </div>
+                )}
+
                 {/* Actions */}
-                <div className="flex gap-3">
-                    {bounty.status === 'open' && auth.user && (
-                        <Button variant="outline">
-                            {t('bounty.contribute')}
-                        </Button>
-                    )}
-                    {bounty.status === 'open' && auth.user && (
-                        <Button>
-                            {t('bounty.claim')}
-                        </Button>
-                    )}
+                <div className="flex flex-wrap gap-3">
+                    {/* Guest */}
                     {!auth.user && (
                         <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
                             <span>{t('bounty.login_to_act')}</span>
@@ -186,6 +217,56 @@ export default function BountyShow({ auth, bounty, paymentStatus }: Props) {
                                 <Button size="sm">{t('nav.login')}</Button>
                             </Link>
                         </div>
+                    )}
+
+                    {/* Hunter: claim open bounty */}
+                    {bounty.status === 'open' && auth.user && !isFunder && (
+                        <Button onClick={handleClaim}>
+                            {t('bounty.claim')}
+                        </Button>
+                    )}
+
+                    {/* Funder: add more funds */}
+                    {bounty.status === 'open' && auth.user && (
+                        <Button variant="outline" asChild>
+                            <Link href={`/bounties/create?stack=${encodeURIComponent(bounty.issue_url)}`}>
+                                {t('bounty.contribute')}
+                            </Link>
+                        </Button>
+                    )}
+
+                    {/* Hunter: release their own claim */}
+                    {bounty.status === 'claimed' && isClaimer && (
+                        <Button variant="outline" onClick={handleRelease} className="text-red-600 border-red-300 hover:bg-red-50">
+                            {t('bounty.release_claim')}
+                        </Button>
+                    )}
+
+                    {/* Funder: approve or reject while in_review */}
+                    {bounty.status === 'in_review' && isFunder && (
+                        <>
+                            <Button onClick={handleApprove} className="bg-green-600 hover:bg-green-700">
+                                {t('bounty.approve')}
+                            </Button>
+                            <Button variant="outline" onClick={() => handleReject(false)} className="text-yellow-700 border-yellow-300 hover:bg-yellow-50">
+                                {t('bounty.request_changes')}
+                            </Button>
+                            <Button variant="outline" onClick={() => handleReject(true)} className="text-red-600 border-red-300 hover:bg-red-50">
+                                {t('bounty.open_dispute')}
+                            </Button>
+                        </>
+                    )}
+
+                    {/* PR link */}
+                    {bounty.linked_pr_url && (
+                        <a
+                            href={bounty.linked_pr_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-3 py-2 text-sm text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-700 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
+                        >
+                            {t('bounty.view_pr')} ↗
+                        </a>
                     )}
                 </div>
 

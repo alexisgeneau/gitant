@@ -55,7 +55,12 @@
       "cancelled": "Annulé"
     },
     "claim": "Réclamer la Bounty",
-    "submit_pr": "Soumettre une PR"
+    "submit_pr": "Soumettre une PR",
+    "release_claim": "Abandonner la réclamation",
+    "approve": "Approuver & Payer le hunter",
+    "request_changes": "Demander des modifications",
+    "open_dispute": "Ouvrir un litige",
+    "view_pr": "Voir la PR"
   },
   "auth": {
     "login_title": "Connexion",

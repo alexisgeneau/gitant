@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\ApproveBountyAction;
+use App\Actions\ClaimBountyAction;
 use App\Actions\CreateBountyAction;
+use App\Actions\RejectBountyAction;
+use App\Actions\ReleaseClaimAction;
 use App\Http\Requests\CreateBountyRequest;
 use App\Models\Bounty;
 use App\Services\IssueMetadataService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 use InvalidArgumentException;
+use LogicException;
 use RuntimeException;
 
 class BountyController extends Controller
@@ -138,6 +144,79 @@ class BountyController extends Controller
             'bounty'        => $bounty,
             'paymentStatus' => $request->query('payment'),
         ]);
+    }
+
+    // -------------------------------------------------------------------------
+    // Claim
+    // -------------------------------------------------------------------------
+
+    public function claim(Request $request, Bounty $bounty, ClaimBountyAction $action): RedirectResponse
+    {
+        try {
+            $action->handle($bounty, $request->user());
+        } catch (LogicException $e) {
+            return back()->withErrors(['claim' => $e->getMessage()]);
+        }
+
+        return redirect()->route('bounties.show', $bounty)
+            ->with('success', 'You have claimed this bounty. You have 7 days to submit a PR.');
+    }
+
+    // -------------------------------------------------------------------------
+    // Release claim
+    // -------------------------------------------------------------------------
+
+    public function release(Request $request, Bounty $bounty, ReleaseClaimAction $action): RedirectResponse
+    {
+        try {
+            $action->handle($bounty, $request->user());
+        } catch (LogicException $e) {
+            return back()->withErrors(['release' => $e->getMessage()]);
+        }
+
+        return redirect()->route('bounties.show', $bounty)
+            ->with('success', 'Claim released. The bounty is open again.');
+    }
+
+    // -------------------------------------------------------------------------
+    // Approve (funder validates PR → triggers payout)
+    // -------------------------------------------------------------------------
+
+    public function approve(Request $request, Bounty $bounty, ApproveBountyAction $action): RedirectResponse
+    {
+        try {
+            $action->handle($bounty, $request->user());
+        } catch (LogicException $e) {
+            return back()->withErrors(['approve' => $e->getMessage()]);
+        } catch (RuntimeException $e) {
+            return back()->withErrors(['approve' => $e->getMessage()]);
+        }
+
+        return redirect()->route('bounties.show', $bounty)
+            ->with('success', 'Bounty approved! Payout has been triggered for the hunter.');
+    }
+
+    // -------------------------------------------------------------------------
+    // Reject (funder rejects PR)
+    // -------------------------------------------------------------------------
+
+    public function reject(Request $request, Bounty $bounty, RejectBountyAction $action): RedirectResponse
+    {
+        $request->validate([
+            'dispute' => ['sometimes', 'boolean'],
+        ]);
+
+        try {
+            $action->handle($bounty, $request->user(), (bool) $request->input('dispute', false));
+        } catch (LogicException $e) {
+            return back()->withErrors(['reject' => $e->getMessage()]);
+        }
+
+        $message = $request->input('dispute')
+            ? 'Dispute opened. An admin will arbitrate.'
+            : 'PR rejected. The hunter can revise and resubmit.';
+
+        return redirect()->route('bounties.show', $bounty)->with('success', $message);
     }
 
     // -------------------------------------------------------------------------

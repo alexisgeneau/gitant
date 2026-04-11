@@ -36,15 +36,17 @@ return [
     ],
 
     'github' => [
-        'client_id' => env('GITHUB_CLIENT_ID'),
-        'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect' => env('GITHUB_REDIRECT_URI', '/auth/github/callback'),
+        'client_id'      => env('GITHUB_CLIENT_ID'),
+        'client_secret'  => env('GITHUB_CLIENT_SECRET'),
+        'redirect'       => env('GITHUB_REDIRECT_URI', '/auth/github/callback'),
+        'webhook_secret' => env('GITHUB_WEBHOOK_SECRET'),
     ],
 
     'gitlab' => [
-        'client_id' => env('GITLAB_CLIENT_ID'),
-        'client_secret' => env('GITLAB_CLIENT_SECRET'),
-        'redirect' => env('GITLAB_REDIRECT_URI', '/auth/gitlab/callback'),
+        'client_id'      => env('GITLAB_CLIENT_ID'),
+        'client_secret'  => env('GITLAB_CLIENT_SECRET'),
+        'redirect'       => env('GITLAB_REDIRECT_URI', '/auth/gitlab/callback'),
+        'webhook_secret' => env('GITLAB_WEBHOOK_SECRET'),
     ],
 
     'stripe' => [

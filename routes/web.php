@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\BountyController;
+use App\Http\Controllers\GitHubWebhookController;
+use App\Http\Controllers\GitLabWebhookController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Profile\SettingsController;
 use App\Http\Controllers\StripeConnectController;
@@ -55,6 +57,14 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('/bounties/{bounty}', [BountyController::class, 'show'])->name('bounties.show');
 
+// Bounty lifecycle actions (auth required)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/bounties/{bounty}/claim', [BountyController::class, 'claim'])->name('bounties.claim');
+    Route::post('/bounties/{bounty}/release', [BountyController::class, 'release'])->name('bounties.release');
+    Route::post('/bounties/{bounty}/approve', [BountyController::class, 'approve'])->name('bounties.approve');
+    Route::post('/bounties/{bounty}/reject', [BountyController::class, 'reject'])->name('bounties.reject');
+});
+
 // -------------------------------------------------------------------------
 // Public profile pages
 // -------------------------------------------------------------------------
@@ -92,3 +102,11 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/webhooks/stripe', [StripeWebhookController::class, 'handle'])
     ->name('webhooks.stripe')
     ->middleware('throttle:100,1');
+
+Route::post('/webhooks/github', [GitHubWebhookController::class, 'handle'])
+    ->name('webhooks.github')
+    ->middleware('throttle:200,1');
+
+Route::post('/webhooks/gitlab', [GitLabWebhookController::class, 'handle'])
+    ->name('webhooks.gitlab')
+    ->middleware('throttle:200,1');

@@ -17,9 +17,11 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
 
-        // Stripe webhooks must bypass CSRF verification
+        // Webhooks must bypass CSRF verification (signatures verified per-controller)
         $middleware->validateCsrfTokens(except: [
             'webhooks/stripe',
+            'webhooks/github',
+            'webhooks/gitlab',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

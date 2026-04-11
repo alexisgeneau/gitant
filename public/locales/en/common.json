@@ -55,7 +55,12 @@
       "cancelled": "Cancelled"
     },
     "claim": "Claim Bounty",
-    "submit_pr": "Submit PR"
+    "submit_pr": "Submit PR",
+    "release_claim": "Release Claim",
+    "approve": "Approve & Pay Hunter",
+    "request_changes": "Request Changes",
+    "open_dispute": "Open Dispute",
+    "view_pr": "View PR"
   },
   "auth": {
     "login_title": "Log in",
