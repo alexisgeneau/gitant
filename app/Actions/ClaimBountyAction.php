@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Models\Bounty;
 use App\Models\User;
+use App\Notifications\BountyClaimedNotification;
 use Illuminate\Support\Facades\DB;
 use LogicException;
 
@@ -39,7 +40,16 @@ class ClaimBountyAction
                 'claim_expires_at'    => $now->copy()->addDays(7),
             ]);
 
-            return $bounty->fresh();
+            $fresh = $bounty->fresh();
+
+            // Notify all funders
+            foreach ($fresh->paidContributions as $contribution) {
+                if ($contribution->funder) {
+                    $contribution->funder->notify(new BountyClaimedNotification($fresh, $hunter));
+                }
+            }
+
+            return $fresh;
         });
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\BountyController;
 use App\Http\Controllers\DisputeController;
 use App\Http\Controllers\GitHubWebhookController;
 use App\Http\Controllers\GitLabWebhookController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Profile\SettingsController;
 use App\Http\Controllers\StripeConnectController;
@@ -77,6 +78,14 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
     Route::get('/disputes', [AdminDisputeController::class, 'index'])->name('admin.disputes.index');
     Route::post('/disputes/{dispute}/resolve', [AdminDisputeController::class, 'resolve'])->name('admin.disputes.resolve');
+});
+
+// Notification API routes (auth required)
+Route::middleware('auth:sanctum')->prefix('api')->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::patch('/notifications/{id}/read', [NotificationController::class, 'markRead'])->name('notifications.mark-read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
+    Route::patch('/notification-preferences', [NotificationController::class, 'updatePreferences'])->name('notification-preferences.update');
 });
 
 // -------------------------------------------------------------------------

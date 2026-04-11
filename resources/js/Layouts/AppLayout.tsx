@@ -2,6 +2,7 @@ import { Link, router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { usePage } from '@inertiajs/react';
 import { ReactNode } from 'react';
+import NotificationBell from '@/Components/NotificationBell';
 import { PageProps } from '@/types';
 
 interface Props {
@@ -34,6 +35,7 @@ export default function AppLayout({ children }: Props) {
                     </div>
 
                     <div className="flex items-center gap-4">
+                        <NotificationBell userId={user.id} />
                         <Link
                             href={`/profile/${user.username}`}
                             className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition"

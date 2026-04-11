@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Models\Bounty;
 use App\Models\User;
+use App\Notifications\PRRejectedNotification;
 use Illuminate\Support\Facades\DB;
 use LogicException;
 
@@ -23,6 +24,7 @@ class RejectBountyAction
             throw new LogicException('You are not a funder of this bounty.');
         }
 
+        $hunter = $bounty->claimer;
         $newStatus = $openDispute ? 'disputed' : 'claimed';
 
         DB::transaction(function () use ($bounty, $newStatus) {
@@ -31,6 +33,11 @@ class RejectBountyAction
                 'auto_validate_at' => null,
             ]);
         });
+
+        // Notify the hunter
+        if ($hunter) {
+            $hunter->notify(new PRRejectedNotification($bounty));
+        }
 
         return $bounty->fresh();
     }

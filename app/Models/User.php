@@ -26,6 +26,7 @@ class User extends Authenticatable
         'is_admin',
         'reputation_score',
         'cooldown_until',
+        'notification_preferences',
     ];
 
     protected $hidden = [
@@ -35,9 +36,10 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'is_admin'       => 'boolean',
-            'deleted_at'     => 'datetime',
-            'cooldown_until' => 'datetime',
+            'is_admin'                  => 'boolean',
+            'deleted_at'                => 'datetime',
+            'cooldown_until'            => 'datetime',
+            'notification_preferences'  => 'array',
         ];
     }
 

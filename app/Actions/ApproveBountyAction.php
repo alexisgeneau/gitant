@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Models\Bounty;
 use App\Models\User;
+use App\Notifications\PRApprovedNotification;
 use Illuminate\Support\Facades\DB;
 use LogicException;
 
@@ -24,9 +25,16 @@ class ApproveBountyAction
             throw new LogicException('You are not a funder of this bounty.');
         }
 
+        $hunter = $bounty->claimer;
+
         DB::transaction(function () use ($bounty) {
             $this->payoutAction->handle($bounty);
         });
+
+        // Notify the hunter
+        if ($hunter) {
+            $hunter->notify(new PRApprovedNotification($bounty));
+        }
 
         return $bounty->fresh();
     }

@@ -2,6 +2,7 @@
 
 use App\Jobs\CheckAutoValidation;
 use App\Jobs\CheckExpiredClaims;
+use App\Jobs\SendValidationReminders;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
@@ -19,3 +20,6 @@ Schedule::job(new CheckExpiredClaims)->hourly()->name('check-expired-claims');
 
 // Auto-validate bounties where funder hasn't responded within 14 days
 Schedule::job(new CheckAutoValidation)->hourly()->name('check-auto-validation');
+
+// Send D+3 / D+7 / D+12 validation reminder emails to funders
+Schedule::job(new SendValidationReminders)->daily()->name('send-validation-reminders');
