@@ -12,14 +12,47 @@
   },
   "bounty": {
     "create": "Poster une Bounty",
+    "post_bounty": "Poster la bounty",
+    "posting": "Publication",
     "amount": "Montant",
+    "catalogue_subtitle": "Parcourez les bounties ouvertes et soyez payé pour contribuer à l'open source.",
+    "search_placeholder": "Rechercher des issues…",
+    "search": "Rechercher",
+    "clear_filters": "Effacer les filtres",
+    "sort_by": "Trier par",
+    "sort": {
+      "amount": "Montant",
+      "created_at": "Plus récent",
+      "expires_at": "Expire bientôt"
+    },
+    "results_count": "{{count}} bounties ouvertes",
+    "no_results": "Aucune bounty trouvée.",
+    "issue_url_label": "URL de l'issue GitHub ou GitLab",
+    "amount_label": "Montant de la bounty (USD)",
+    "bounty_amount": "Montant bounty",
+    "platform_fee": "Commission plateforme",
+    "total_charged": "Total débité",
+    "public_message_label": "Message pour le hunter",
+    "public_message_placeholder": "Contexte, exigences ou critères d'acceptation…",
+    "resolving_issue": "Récupération de l'issue",
+    "resolve_error": "Impossible de récupérer l'issue. Vérifiez l'URL.",
+    "total_bounty": "Total bounty",
+    "issue_description": "Description de l'issue",
+    "view_full_issue": "Voir l'issue complète",
+    "funder_message": "Message du financeur",
+    "claimed_by": "Réclamée par",
+    "deadline": "Échéance",
+    "funders": "Financeurs",
+    "contribute": "Ajouter des fonds",
+    "login_to_act": "Connectez-vous pour réclamer ou financer cette bounty.",
     "status": {
       "open": "Ouvert",
       "claimed": "Réclamé",
       "in_review": "En révision",
       "completed": "Terminé",
       "disputed": "Disputé",
-      "expired": "Expiré"
+      "expired": "Expiré",
+      "cancelled": "Annulé"
     },
     "claim": "Réclamer la Bounty",
     "submit_pr": "Soumettre une PR"
@@ -58,5 +91,8 @@
   "dashboard": {
     "welcome": "Bienvenue, @{{username}}",
     "subtitle": "Voici un aperçu de votre activité."
+  },
+  "common": {
+    "optional": "optionnel"
   }
 }

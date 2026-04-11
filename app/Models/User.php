@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -41,9 +42,15 @@ class User extends Authenticatable
     // Relationships
     // -------------------------------------------------------------------------
 
-    // Will be populated when Bounty model exists
-    // public function postedBounties(): HasMany { ... }
-    // public function claims(): HasMany { ... }
+    public function contributions(): HasMany
+    {
+        return $this->hasMany(BountyContribution::class);
+    }
+
+    public function claims(): HasMany
+    {
+        return $this->hasMany(Bounty::class, 'claimed_by_user_id');
+    }
 
     // -------------------------------------------------------------------------
     // Helpers

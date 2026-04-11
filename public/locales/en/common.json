@@ -12,14 +12,47 @@
   },
   "bounty": {
     "create": "Post a Bounty",
+    "post_bounty": "Post Bounty",
+    "posting": "Posting",
     "amount": "Amount",
+    "catalogue_subtitle": "Browse open bounties and get paid to contribute to open source.",
+    "search_placeholder": "Search issues…",
+    "search": "Search",
+    "clear_filters": "Clear filters",
+    "sort_by": "Sort by",
+    "sort": {
+      "amount": "Amount",
+      "created_at": "Newest",
+      "expires_at": "Expiring soon"
+    },
+    "results_count": "{{count}} open bounties",
+    "no_results": "No bounties found.",
+    "issue_url_label": "GitHub or GitLab issue URL",
+    "amount_label": "Bounty amount (USD)",
+    "bounty_amount": "Bounty amount",
+    "platform_fee": "Platform fee",
+    "total_charged": "Total charged",
+    "public_message_label": "Message for the hunter",
+    "public_message_placeholder": "Any context, requirements, or acceptance criteria…",
+    "resolving_issue": "Fetching issue info",
+    "resolve_error": "Could not fetch issue info. Please check the URL.",
+    "total_bounty": "Total bounty",
+    "issue_description": "Issue description",
+    "view_full_issue": "View full issue",
+    "funder_message": "Message from funder",
+    "claimed_by": "Claimed by",
+    "deadline": "Deadline",
+    "funders": "Funders",
+    "contribute": "Add funds",
+    "login_to_act": "Log in to claim or fund this bounty.",
     "status": {
       "open": "Open",
       "claimed": "Claimed",
       "in_review": "In Review",
       "completed": "Completed",
       "disputed": "Disputed",
-      "expired": "Expired"
+      "expired": "Expired",
+      "cancelled": "Cancelled"
     },
     "claim": "Claim Bounty",
     "submit_pr": "Submit PR"
@@ -58,5 +91,8 @@
   "dashboard": {
     "welcome": "Welcome, @{{username}}",
     "subtitle": "Here is your activity overview."
+  },
+  "common": {
+    "optional": "optional"
   }
 }

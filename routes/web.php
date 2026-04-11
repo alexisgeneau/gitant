@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\BountyController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Profile\SettingsController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,22 @@ Route::middleware('throttle:10,1')->group(function () {
 Route::post('/logout', [SocialiteController::class, 'logout'])
     ->name('logout')
     ->middleware('auth:sanctum');
+
+// -------------------------------------------------------------------------
+// Bounty routes (create/rss before {bounty} to avoid wildcard capture)
+// -------------------------------------------------------------------------
+
+Route::get('/bounties', [BountyController::class, 'index'])->name('bounties.index');
+Route::get('/bounties/rss', [BountyController::class, 'rss'])->name('bounties.rss');
+
+// Auth-required creation routes — declared before {bounty} to prevent wildcard capture
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/bounties/create', [BountyController::class, 'create'])->name('bounties.create');
+    Route::post('/bounties', [BountyController::class, 'store'])->name('bounties.store');
+    Route::post('/api/bounties/resolve-issue', [BountyController::class, 'resolveIssue'])->name('bounties.resolve-issue');
+});
+
+Route::get('/bounties/{bounty}', [BountyController::class, 'show'])->name('bounties.show');
 
 // -------------------------------------------------------------------------
 // Public profile pages
