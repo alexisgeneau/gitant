@@ -9,6 +9,7 @@ use App\Http\Controllers\GitLabWebhookController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Profile\SettingsController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\StripeConnectController;
 use App\Http\Controllers\StripeWebhookController;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,8 @@ Route::post('/logout', [SocialiteController::class, 'logout'])
 // -------------------------------------------------------------------------
 // Bounty routes (create/rss before {bounty} to avoid wildcard capture)
 // -------------------------------------------------------------------------
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/bounties', [BountyController::class, 'index'])->name('bounties.index');
 Route::get('/bounties/rss', [BountyController::class, 'rss'])->name('bounties.rss');

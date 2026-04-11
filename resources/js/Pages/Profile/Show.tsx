@@ -28,9 +28,55 @@ interface Props extends PageProps {
 export default function ProfileShow({ profile }: Props) {
     const { t } = useTranslation();
 
+    const profileUrl = typeof window !== 'undefined'
+        ? `${window.location.origin}/profile/${profile.username}`
+        : `/profile/${profile.username}`;
+
+    const ogDescription = [
+        profile.stats.bounties_completed > 0
+            ? `${profile.stats.bounties_completed} bounties completed`
+            : null,
+        profile.stats.total_earned > 0
+            ? `€${profile.stats.total_earned} earned`
+            : null,
+    ]
+        .filter(Boolean)
+        .join(' · ') || 'Gitant contributor';
+
+    const schemaJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: profile.username,
+        url: profileUrl,
+        image: profile.avatar_url ?? undefined,
+    };
+
     return (
         <GuestLayout>
-            <Head title={`@${profile.username}`} />
+            <Head title={`@${profile.username}`}>
+                {/* Open Graph */}
+                <meta property="og:type" content="profile" />
+                <meta property="og:title" content={`@${profile.username} on Gitant`} />
+                <meta property="og:description" content={ogDescription} />
+                <meta property="og:url" content={profileUrl} />
+                <meta property="og:site_name" content="Gitant" />
+                {profile.avatar_url && (
+                    <meta property="og:image" content={profile.avatar_url} />
+                )}
+
+                {/* Twitter Card */}
+                <meta name="twitter:card" content="summary" />
+                <meta name="twitter:title" content={`@${profile.username} on Gitant`} />
+                <meta name="twitter:description" content={ogDescription} />
+                {profile.avatar_url && (
+                    <meta name="twitter:image" content={profile.avatar_url} />
+                )}
+
+                {/* Schema.org JSON-LD */}
+                <script type="application/ld+json">
+                    {JSON.stringify(schemaJsonLd)}
+                </script>
+            </Head>
 
             <div className="container mx-auto px-4 py-12 max-w-3xl">
                 {/* Header */}

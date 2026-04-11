@@ -61,9 +61,58 @@ export default function BountyShow({ auth, bounty, paymentStatus, flash }: Props
     const platformLabel = bounty.issue_platform === 'github' ? 'GitHub' : 'GitLab';
     const issueLink = bounty.issue_url;
 
+    const bountyUrl = typeof window !== 'undefined'
+        ? `${window.location.origin}/bounties/${bounty.id}`
+        : `/bounties/${bounty.id}`;
+
+    const ogDescription = [
+        `${amountDollars} bounty on ${platformLabel}`,
+        `${bounty.issue_repo_owner}/${bounty.issue_repo_name}#${bounty.issue_number}`,
+        bounty.issue_description
+            ? bounty.issue_description.slice(0, 120) + (bounty.issue_description.length > 120 ? '…' : '')
+            : null,
+    ]
+        .filter(Boolean)
+        .join(' — ');
+
+    const schemaJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Offer',
+        name: bounty.issue_title,
+        description: ogDescription,
+        url: bountyUrl,
+        priceCurrency: 'USD',
+        price: (bounty.total_amount_cents / 100).toFixed(2),
+        availability: bounty.status === 'open'
+            ? 'https://schema.org/InStock'
+            : 'https://schema.org/SoldOut',
+        seller: {
+            '@type': 'Organization',
+            name: 'Gitant',
+            url: typeof window !== 'undefined' ? window.location.origin : 'https://gitant.io',
+        },
+    };
+
     return (
         <Layout>
-            <Head title={bounty.issue_title} />
+            <Head title={bounty.issue_title}>
+                {/* Open Graph */}
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content={`${bounty.issue_title} — ${amountDollars} Bounty`} />
+                <meta property="og:description" content={ogDescription} />
+                <meta property="og:url" content={bountyUrl} />
+                <meta property="og:site_name" content="Gitant" />
+
+                {/* Twitter Card */}
+                <meta name="twitter:card" content="summary" />
+                <meta name="twitter:title" content={`${bounty.issue_title} — ${amountDollars} Bounty`} />
+                <meta name="twitter:description" content={ogDescription} />
+
+                {/* Schema.org JSON-LD */}
+                <script type="application/ld+json">
+                    {JSON.stringify(schemaJsonLd)}
+                </script>
+            </Head>
 
             <div className="max-w-3xl mx-auto">
                 {/* Payment status banners */}
