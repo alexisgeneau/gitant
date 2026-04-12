@@ -14,6 +14,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Billable, SoftDeletes;
 
+    /** OAuth-only auth — no password-based remember tokens needed. */
+    public $rememberTokenName = '';
+
     protected $fillable = [
         'username',
         'email',
