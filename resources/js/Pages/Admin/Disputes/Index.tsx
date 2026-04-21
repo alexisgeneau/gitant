@@ -70,7 +70,8 @@ function ResolveForm({ dispute }: { dispute: DisputeSummary }) {
                 placeholder="Resolution notes (min 20 characters)…"
                 className="w-full rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-2 py-1 text-xs"
             />
-            {errors.resolve && <p className="text-xs text-red-600">{errors.resolve}</p>}
+            {errors.resolution && <p className="text-xs text-red-600">{errors.resolution}</p>}
+            {errors.notes && <p className="text-xs text-red-600">{errors.notes}</p>}
             <Button type="submit" size="sm" disabled={processing}>
                 {processing ? 'Resolving…' : 'Resolve Dispute'}
             </Button>

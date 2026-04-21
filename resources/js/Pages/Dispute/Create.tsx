@@ -1,4 +1,4 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import AppLayout from '@/Layouts/AppLayout';
 import { Button } from '@/Components/ui/button';
@@ -28,7 +28,8 @@ const DEMAND_OPTIONS = [
 
 export default function DisputeCreate({ bounty }: Props) {
     const { t } = useTranslation();
-    const { data, setData, post, processing, errors } = useForm({
+    const pageErrors = usePage().props.errors as Record<string, string>;
+    const { data, setData, post, processing, errors, transform } = useForm({
         type: '',
         summary: '',
         demand: '',
@@ -37,10 +38,11 @@ export default function DisputeCreate({ bounty }: Props) {
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
-        const cleanedEvidence = data.evidence.filter(url => url.trim() !== '');
-        post(`/bounties/${bounty.id}/dispute`, {
-            data: { ...data, evidence: cleanedEvidence },
-        });
+        transform(current => ({
+            ...current,
+            evidence: current.evidence.filter(url => url.trim() !== ''),
+        }));
+        post(`/bounties/${bounty.id}/dispute`);
     }
 
     return (
@@ -129,8 +131,8 @@ export default function DisputeCreate({ bounty }: Props) {
                         </div>
                     </div>
 
-                    {errors.dispute && (
-                        <p className="text-sm text-red-600">{errors.dispute}</p>
+                    {pageErrors.dispute && (
+                        <p className="text-sm text-red-600">{pageErrors.dispute}</p>
                     )}
 
                     <div className="pt-2">

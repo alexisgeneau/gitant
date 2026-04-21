@@ -48,7 +48,7 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 export default function DisputeShow({ auth, dispute, flash }: Props) {
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing, errors, transform } = useForm({
         position: '',
         evidence: ['', '', '', '', ''],
     });
@@ -59,10 +59,11 @@ export default function DisputeShow({ auth, dispute, flash }: Props) {
 
     function handleRespond(e: FormEvent) {
         e.preventDefault();
-        const cleanedEvidence = data.evidence.filter(url => url.trim() !== '');
-        post(`/disputes/${dispute.id}/respond`, {
-            data: { position: data.position, evidence: cleanedEvidence },
-        });
+        transform(current => ({
+            position: current.position,
+            evidence: current.evidence.filter(url => url.trim() !== ''),
+        }));
+        post(`/disputes/${dispute.id}/respond`);
     }
 
     return (

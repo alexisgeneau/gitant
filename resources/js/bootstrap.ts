@@ -6,7 +6,7 @@ declare global {
     interface Window {
         axios: typeof axios;
         Pusher: typeof Pusher;
-        Echo: Echo;
+        Echo: Echo<'reverb'>;
     }
 }
 
