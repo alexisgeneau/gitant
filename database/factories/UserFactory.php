@@ -4,8 +4,6 @@ namespace Database\Factories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
  * @extends Factory<User>
@@ -13,33 +11,38 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
-
-    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
+        $username = fake()->unique()->userName();
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'username'         => $username,
+            'email'            => fake()->unique()->safeEmail(),
+            'github_id'        => (string) fake()->unique()->numberBetween(10_000, 99_999_999),
+            'gitlab_id'        => null,
+            'avatar_url'       => 'https://avatars.githubusercontent.com/u/'.fake()->numberBetween(1, 9_999_999).'?v=4',
+            'preferred_locale' => 'en',
+            'is_admin'         => false,
+            'reputation_score' => 100,
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
+    public function admin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+            'is_admin' => true,
+        ]);
+    }
+
+    public function gitlab(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'github_id' => null,
+            'gitlab_id' => (string) fake()->unique()->numberBetween(10_000, 99_999_999),
         ]);
     }
 }
