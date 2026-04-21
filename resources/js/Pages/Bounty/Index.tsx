@@ -1,9 +1,10 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { FormEvent, useState } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import GuestLayout from '@/Layouts/GuestLayout';
 import BountyCard from '@/Components/bounty/BountyCard';
+import SeoMeta from '@/Components/SeoMeta';
 import { Button } from '@/Components/ui/button';
 import { cn } from '@/lib/utils';
 import { PageProps } from '@/types';
@@ -46,9 +47,23 @@ export default function BountyIndex({ auth, bounties, filters, languages }: Prop
 
     const hasFilters = Object.values(filters).some(Boolean);
 
+    const indexDescription = bounties.total > 0
+        ? `Browse ${bounties.total} open source bounties on GitHub and GitLab. Filter by language, platform, or amount and claim one as a hunter.`
+        : 'Browse open source bounties on GitHub and GitLab. Filter by language, platform, or amount and claim one as a hunter.';
+
     return (
         <Layout>
-            <Head title={t('nav.bounties')} />
+            <SeoMeta
+                title={`${t('nav.bounties')} · Gitant`}
+                description={indexDescription}
+                jsonLd={{
+                    '@context': 'https://schema.org',
+                    '@type': 'CollectionPage',
+                    name: 'Open bounties on Gitant',
+                    description: indexDescription,
+                    url: typeof window !== 'undefined' ? window.location.href : undefined,
+                }}
+            />
 
             <div className="max-w-5xl mx-auto">
                 {/* Header */}

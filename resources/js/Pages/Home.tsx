@@ -1,12 +1,30 @@
-import { Head } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
+import SeoMeta from '@/Components/SeoMeta';
 
 export default function Home() {
     const { t } = useTranslation();
 
     return (
         <>
-            <Head title="Home" />
+            <SeoMeta
+                title="Gitant — bounties for open source issues"
+                description="Fund GitHub and GitLab issues or claim bounties as a hunter. Escrowed payouts via Stripe Connect, transparent 10% commission, GDPR-friendly."
+                jsonLd={{
+                    '@context': 'https://schema.org',
+                    '@type': 'WebSite',
+                    name: 'Gitant',
+                    description: 'Bounty platform for open source issues.',
+                    url: typeof window !== 'undefined' ? window.location.origin : 'https://gitant.io',
+                    potentialAction: {
+                        '@type': 'SearchAction',
+                        target: {
+                            '@type': 'EntryPoint',
+                            urlTemplate: `${typeof window !== 'undefined' ? window.location.origin : 'https://gitant.io'}/bounties?q={search_term_string}`,
+                        },
+                        'query-input': 'required name=search_term_string',
+                    },
+                }}
+            />
             <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white dark:from-gray-900 dark:to-gray-800">
                 <div className="container mx-auto px-4 py-16">
                     <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
