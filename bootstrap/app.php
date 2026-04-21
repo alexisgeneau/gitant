@@ -17,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
 
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+
         // Webhooks must bypass CSRF verification (signatures verified per-controller)
         $middleware->validateCsrfTokens(except: [
             'webhooks/stripe',
